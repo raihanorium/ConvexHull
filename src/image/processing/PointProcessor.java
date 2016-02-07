@@ -2,54 +2,35 @@ package image.processing;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
- * Created by Rakib on 1/24/2016.
+ * Processes Points
+ *
+ * @author Rakib
  */
 public abstract class PointProcessor {
     public static final int TOLERANCE = 1;
 
-    public static java.util.List<Point> groupPoints(List<Point> list) {
-        java.util.List<Point> result = new ArrayList<Point>();
-
-        java.util.List<Point> tmpLst = new ArrayList<Point>();
-
-        for (Point p : list) {
-            if (tmpLst.size() > 0) {
-                int index = tmpLst.size() - 1;
-                Point lastPoint = tmpLst.get(index);
-                int diffX = (int) Math.abs(lastPoint.getX() - p.getX());
-                int diffY = (int) Math.abs(lastPoint.getY() - p.getY());
-
-                if ((diffX + diffY) <= TOLERANCE) {
-                    tmpLst.add(p);
-                } else {
-                    result.addAll(tmpLst);
-                    tmpLst = new ArrayList<Point>();
-                }
-            } else {
-                tmpLst.add(p);
-            }
-        }
-
-        return result;
-    }
-
-    public static java.util.List<java.util.List<Point>> detectDistantPoints(List<Point> list){
-        sortByXCoordinates(list);
-
-        List<List<Point>> result = new ArrayList<List<Point>>();
-        result.add(list);
-
-        return result;
-    }
-
+    /**
+     * Sorts points by x coordinate
+     *
+     * @param list List<Point> to sort
+     */
     private static void sortByXCoordinates(List<Point> list) {
         Collections.sort(list, new PointCompare());
     }
 
+    /**
+     * Detects edge in an image
+     *
+     * @param image The image to work with
+     * @param level Level of sharpness
+     * @return List<Point> as the edge points
+     */
     public static java.util.List<Point> getEdge(BufferedImage image, float level) {
         List<Point> result = new ArrayList<Point>();
 
@@ -72,6 +53,12 @@ public abstract class PointProcessor {
         return result;
     }
 
+    /**
+     * Determines the luminance of a color
+     *
+     * @param color Integer value of a color
+     * @return Luminance in float
+     */
     private static float getLuminance(int color) {
         // extract each color component
         int red = (color >>> 16) & 0xFF;
@@ -84,16 +71,24 @@ public abstract class PointProcessor {
     }
 }
 
+/**
+ * Compares points for sorting
+ */
 class PointCompare implements Comparator<Point> {
 
+    /**
+     * Compares two points for sorting
+     *
+     * @param a First point
+     * @param b Second point
+     * @return Comparison result as int
+     */
     public int compare(final Point a, final Point b) {
         if (a.x < b.x) {
             return -1;
-        }
-        else if (a.x > b.x) {
+        } else if (a.x > b.x) {
             return 1;
-        }
-        else {
+        } else {
             return 0;
         }
     }

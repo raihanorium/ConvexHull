@@ -2,9 +2,6 @@ package image.web;
 
 import image.processing.ConvexHull;
 import image.processing.ImageProcessor;
-import image.processing.PointProcessor;
-import sun.misc.BASE64Encoder;
-import sun.misc.IOUtils;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
@@ -13,13 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-import javax.xml.bind.DatatypeConverter;
 import java.awt.*;
-import java.awt.image.RenderedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,6 +22,14 @@ import java.util.List;
 
 @MultipartConfig
 public class HomeServlet extends HttpServlet {
+    /**
+     * Processes the posted data
+     *
+     * @param request  The request sent to server
+     * @param response The response sent to client
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Part filePart = request.getPart("imageFile");
         if (filePart.getSize() > 0) {
@@ -48,9 +50,9 @@ public class HomeServlet extends HttpServlet {
         }
 
         Color color = null;
-        try{
+        try {
             color = Color.decode(sessionColor);
-        } catch (Exception e){
+        } catch (Exception e) {
             request.setAttribute("errorMessage", "Please give a valid hex for color");
             request.getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);
         }
@@ -58,12 +60,10 @@ public class HomeServlet extends HttpServlet {
         ImageProcessor ipInput = new ImageProcessor(sessionImage);
         ImageProcessor ipOutput = new ImageProcessor(sessionImage);
 
-        java.util.List<Point> lst = ipOutput.getPixelsByColor( color,
+        java.util.List<Point> lst = ipOutput.getPixelsByColor(color,
                 Float.parseFloat(sessionTolerance));
         //java.util.List<Point> lst = ipOutput.getEdges(0.007f);
 
-        //lst = PointProcessor.groupPoints(lst);
-        PointProcessor.detectDistantPoints(lst);
         List<Point> convexHull = ConvexHull.generateConvexHull((ArrayList<Point>) lst);
         ipOutput.drawLine(convexHull, new Color(0, 255, 25));
 
@@ -73,6 +73,14 @@ public class HomeServlet extends HttpServlet {
         request.getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);
     }
 
+    /**
+     * Initiates the page
+     *
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getSession().setAttribute("color", "#000000");
         request.getSession().setAttribute("tolerance", 5f);

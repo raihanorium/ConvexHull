@@ -1,3 +1,3 @@
 <%
-  response.sendRedirect("/convex-hull");
+    response.sendRedirect("/convex-hull");
 %>

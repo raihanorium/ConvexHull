@@ -6,11 +6,19 @@ import java.util.Collections;
 import java.util.Comparator;
 
 /**
- * Created by Rakib on 1/25/2016.
+ * Generates Convex Hull
+ *
+ * @author Rakib
  */
 public abstract class ConvexHull {
+    /**
+     * Generates Convex hull of given points
+     *
+     * @param points as an ArrayList<Point>
+     * @return convex hull points as ArrayList<Point>
+     */
     public static ArrayList<Point> generateConvexHull(ArrayList<Point> points) {
-        if(points.size() < 2) return new ArrayList<Point>();
+        if (points.size() < 2) return new ArrayList<Point>();
 
         ArrayList<Point> xSorted = (ArrayList<Point>) points.clone();
         Collections.sort(xSorted, new XCompare());
@@ -66,10 +74,21 @@ public abstract class ConvexHull {
         return result;
     }
 
+    /**
+     * Determines if it's a right turn
+     *
+     * @param a First point
+     * @param b Second point
+     * @param c Third point
+     * @return True if it's a right turn
+     */
     private static boolean rightTurn(Point a, Point b, Point c) {
         return (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x) > 0;
     }
 
+    /**
+     * Compares two points
+     */
     private static class XCompare implements Comparator<Point> {
         @Override
         public int compare(Point o1, Point o2) {

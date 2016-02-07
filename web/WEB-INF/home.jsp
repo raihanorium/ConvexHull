@@ -17,7 +17,7 @@
 <p style="color: red;">
     <%
         out.write(
-            request.getAttribute("errorMessage") == null ? "" : request.getAttribute("errorMessage").toString()
+                request.getAttribute("errorMessage") == null ? "" : request.getAttribute("errorMessage").toString()
         );
     %>
 </p>
@@ -25,9 +25,9 @@
 <form action="" method="post" enctype="multipart/form-data">
     Image: <input type="file" name="imageFile"/>
 
-    Select Color: <input type="text" id="color" name="color" value="${color}" />
+    Select Color: <input type="text" id="color" name="color" value="${color}"/>
 
-    Color Tolerance: <input type="text" name="tolerance" value="${tolerance}" />
+    Color Tolerance: <input type="text" name="tolerance" value="${tolerance}"/>
 
     <input type="submit" value="Update"/>
 </form>
@@ -57,7 +57,7 @@
 <script src="../resources/jquery.min.js"></script>
 
 <script type="text/javascript">
-    window.onload = function(){
+    window.onload = function () {
         var canvas = document.getElementById('myCanvas');
         var originalImage = document.getElementById('originalImage');
         canvas.width = originalImage.width;
@@ -70,25 +70,25 @@
         context.drawImage(img, 0, 0);
     };
 
-    function findPos(obj){
+    function findPos(obj) {
         var current_left = 0, current_top = 0;
-        if (obj.offsetParent){
-            do{
+        if (obj.offsetParent) {
+            do {
                 current_left += obj.offsetLeft;
                 current_top += obj.offsetTop;
-            }while(obj = obj.offsetParent);
+            } while (obj = obj.offsetParent);
             return {x: current_left, y: current_top};
         }
         return undefined;
     }
 
-    function rgbToHex(r, g, b){
+    function rgbToHex(r, g, b) {
         if (r > 255 || g > 255 || b > 255)
             throw "Invalid color component";
         return ((r << 16) | (g << 8) | b).toString(16);
     }
 
-    $('#myCanvas').click(function(e){
+    $('#myCanvas').click(function (e) {
         var position = findPos(this);
         var x = e.pageX - position.x;
         var y = e.pageY - position.y;
