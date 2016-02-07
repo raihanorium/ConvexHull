@@ -52,7 +52,7 @@ public class ImageProcessor {
      *
      * @param color     The selected color
      * @param tolerance Tolerance value for matching
-     * @return List<Point> of matched colors
+     * @return List of matched colors
      */
     public List<Point> getPixelsByColor(Color color, float tolerance) {
         int tolInt = (int) (tolerance * 1000000);

@@ -14,8 +14,8 @@ public abstract class ConvexHull {
     /**
      * Generates Convex hull of given points
      *
-     * @param points as an ArrayList<Point>
-     * @return convex hull points as ArrayList<Point>
+     * @param points as an ArrayList
+     * @return convex hull points as ArrayList
      */
     public static ArrayList<Point> generateConvexHull(ArrayList<Point> points) {
         if (points.size() < 2) return new ArrayList<Point>();

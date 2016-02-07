@@ -18,7 +18,7 @@ public abstract class PointProcessor {
     /**
      * Sorts points by x coordinate
      *
-     * @param list List<Point> to sort
+     * @param list List to sort
      */
     private static void sortByXCoordinates(List<Point> list) {
         Collections.sort(list, new PointCompare());
@@ -29,7 +29,7 @@ public abstract class PointProcessor {
      *
      * @param image The image to work with
      * @param level Level of sharpness
-     * @return List<Point> as the edge points
+     * @return List as the edge points
      */
     public static java.util.List<Point> getEdge(BufferedImage image, float level) {
         List<Point> result = new ArrayList<Point>();
