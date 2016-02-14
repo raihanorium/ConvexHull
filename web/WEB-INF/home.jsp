@@ -54,7 +54,7 @@
     </tr>
 </table>
 
-<script src="../resources/jquery.min.js"></script>
+<script src="../Group29_P57/resources/jquery.min.js"></script>
 
 <script type="text/javascript">
     window.onload = function () {

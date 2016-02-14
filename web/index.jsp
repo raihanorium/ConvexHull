@@ -1,3 +1,3 @@
 <%
-    response.sendRedirect("/Group29_P57/convex-hull");
+    //response.sendRedirect("/Group29_P57/convex-hull");
 %>
